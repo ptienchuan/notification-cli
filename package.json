@@ -1,0 +1,25 @@
+{
+  "name": "notification-cli",
+  "version": "1.0.0",
+  "description": "Command line tool to send notification to mobile app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ptienchuan/notification-cli.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ptienchuan/notification-cli/issues"
+  },
+  "homepage": "https://github.com/ptienchuan/notification-cli#readme",
+  "dependencies": {
+    "@types/yargs": "^15.0.9",
+    "chalk": "^4.1.0",
+    "yargs": "^16.1.0"
+  }
+}

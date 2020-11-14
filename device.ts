@@ -14,16 +14,16 @@ yargs.command('fetch', 'Get list device tokens', {}, (_) => {
   getDeviceTokens()
     .then((tokens) => {
       if (!tokens.length) {
-        logErrorHeading(' There has 0 tokens ');
+        logErrorHeading('There has 0 tokens');
         return;
       }
 
-      logSuccessHeading(` We found ${chalk.red(tokens.length)} tokens `);
+      logSuccessHeading(`We found ${chalk.red(tokens.length)} tokens`);
       logTable(tokens);
       return;
     })
     .catch((err) => {
-      logErrorHeading(' Opps, we got an error ');
+      logErrorHeading('Opps, we got an error');
       log(err);
     });
 });

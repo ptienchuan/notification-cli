@@ -1,11 +1,11 @@
 import yargs from 'yargs';
 import chalk from 'chalk';
 import { dropDeviceTokens } from './services/notification';
-import { log, logHandling, logSuccessHeading } from './utils/log';
+import { log, logTable, logHandling, logSuccessHeading } from './utils/log';
 import errorHander from './utils/error-handler';
 import deviceHandler from './handlers/device';
 
-yargs.command('fetch', 'Update the list of device tokens', {}, async (_) => {
+yargs.command('fetch', 'Sync the list of device tokens', {}, async (_) => {
   try {
     logHandling();
     const { added, removed } = await deviceHandler.fetch();
@@ -14,6 +14,18 @@ yargs.command('fetch', 'Update the list of device tokens', {}, async (_) => {
     log(`  ${chalk.green(`+ ${added}`)} tokens`);
     log(`  ${chalk.red(`- ${removed}`)} tokens`);
     log('Run list command to see all tokens');
+  } catch (error) {
+    errorHander(error);
+  }
+});
+
+yargs.command('list', 'Show the list of device tokens', {}, async (_) => {
+  try {
+    logHandling();
+    const { tokens } = deviceHandler.list();
+
+    logSuccessHeading(`We found ${chalk.red(tokens.length)} tokens`);
+    tokens.length && logTable(tokens);
   } catch (error) {
     errorHander(error);
   }

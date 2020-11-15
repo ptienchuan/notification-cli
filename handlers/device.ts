@@ -29,4 +29,13 @@ const fetch = async (): Promise<{ added: number; removed: number }> => {
   return { added, removed };
 };
 
-export default { fetch };
+const list = (): { tokens: ExpoToken[] } => {
+  if (!existsSync(deviceDataFile)) return { tokens: [] };
+
+  const fileContent = readFileSync(deviceDataFile).toString();
+  const tokens: ExpoToken[] = fileContent ? JSON.parse(fileContent) : [];
+
+  return { tokens };
+};
+
+export default { fetch, list };

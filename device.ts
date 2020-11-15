@@ -1,26 +1,19 @@
 import yargs from 'yargs';
 import chalk from 'chalk';
-import { dropDeviceTokens, getDeviceTokens } from './services/notification';
-import {
-  log,
-  logTable,
-  logProcessing,
-  logErrorHeading,
-  logSuccessHeading,
-} from './utils/log';
+import { dropDeviceTokens } from './services/notification';
+import { log, logHandling, logSuccessHeading } from './utils/log';
 import errorHander from './utils/error-handler';
+import deviceHandler from './handlers/device';
 
-yargs.command('fetch', 'Get list device tokens', {}, async (_) => {
+yargs.command('fetch', 'Update the list of device tokens', {}, async (_) => {
   try {
-    logProcessing('Fetching ...');
-    const tokens = await getDeviceTokens();
-    if (!tokens.length) {
-      logErrorHeading('There has 0 tokens');
-      return;
-    }
+    logHandling();
+    const { added, removed } = await deviceHandler.fetch();
 
-    logSuccessHeading(`We found ${chalk.red(tokens.length)} tokens`);
-    logTable(tokens);
+    logSuccessHeading('Fetching success!');
+    log(`  ${chalk.green(`+ ${added}`)} tokens`);
+    log(`  ${chalk.red(`- ${removed}`)} tokens`);
+    log('Run list command to see all tokens');
   } catch (error) {
     errorHander(error);
   }
@@ -44,7 +37,7 @@ yargs.command(
       const { token } = args;
       if (!token) throw new Error('Nothing to do!');
 
-      logProcessing('Handling ...');
+      logHandling();
       const droppedTokens = await dropDeviceTokens(token);
 
       logSuccessHeading(`${droppedTokens.length} tokens has been dropped:`);

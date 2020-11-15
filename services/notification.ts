@@ -1,13 +1,9 @@
 import axios from 'axios';
+import { ExpoToken } from '../types/device';
 
 const NotificationService = axios.create({
   baseURL: 'https://expo-notification-6e7a2.firebaseio.com',
 });
-
-interface ExpoToken {
-  id: string;
-  token: string;
-}
 
 const getDeviceTokens = async (): Promise<ExpoToken[]> => {
   const { data } = await NotificationService.get('/expoTokens.json');

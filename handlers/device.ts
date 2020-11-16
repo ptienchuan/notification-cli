@@ -64,10 +64,9 @@ const fetch = async (): Promise<{ added: number; removed: number }> => {
 
   if (existsSync(deviceDataFile)) {
     const fileData = readDeviceFileData();
-    const intersection = newTokens.filter((token) =>
+    const intersection = newTokens.filter(({ token, id }) =>
       fileData.tokens.find(
-        (storedToken) =>
-          token.token === storedToken.token && token.id === storedToken.id
+        (storedToken) => token === storedToken.token && id === storedToken.id
       )
     );
     added = newTokens.length - intersection.length;

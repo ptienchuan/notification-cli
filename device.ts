@@ -32,16 +32,52 @@ yargs.command('list', 'Show the list of device tokens', {}, async (_) => {
 });
 
 yargs.command(
+  'pick',
+  'Pick device token to prepare for sending notification',
+  {
+    all: {
+      alias: 'a',
+      boolean: true,
+      desc: 'Pick all device tokens',
+    },
+    token: {
+      alias: 't',
+      array: true,
+      string: true,
+      desc: 'Pick device token by token value',
+    },
+    index: {
+      alias: 'i',
+      array: true,
+      number: true,
+      desc: 'Pick device token by token index',
+    },
+  },
+  (args) => {
+    try {
+      const { all, index, token } = args;
+      if (!all && !index && !token) throw new Error('Nothing to do!');
+
+      logHandling();
+      const pickedTokenCount = deviceHandler.pick(!!all, token, index);
+
+      logSuccessHeading(`Picked ${chalk.red(pickedTokenCount)} tokens`);
+    } catch (error) {
+      errorHander(error);
+    }
+  }
+);
+
+yargs.command(
   'drop',
   'Drop device token',
   {
     token: {
       alias: 't',
       array: true,
-      requiresArg: true,
       string: true,
-      description:
-        'Tokens of device, you can see the list tokens by command fetch',
+      requiresArg: true,
+      desc: 'Drop device token by token value',
     },
   },
   async (args) => {

@@ -124,4 +124,12 @@ const pick = (
   return tokenWillBePicked.length;
 };
 
-export default { fetch, list, pick };
+const status = (): { pickedTokens: ExpoToken[] } => {
+  if (!existsSync(deviceDataFile)) return { pickedTokens: [] };
+
+  const { pickedTokens } = readDeviceFileData();
+
+  return { pickedTokens };
+};
+
+export default { fetch, list, pick, status };

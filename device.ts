@@ -68,6 +68,47 @@ yargs.command(
   }
 );
 
+yargs.command(
+  'remove',
+  'Remove token from picked list',
+  {
+    all: {
+      alias: 'a',
+      boolean: true,
+      desc: 'Empty picked list',
+    },
+    token: {
+      alias: 't',
+      array: true,
+      string: true,
+      desc: 'Unpick device token by token value',
+    },
+    index: {
+      alias: 'i',
+      array: true,
+      number: true,
+      desc: 'Unpick device token by token index',
+    },
+  },
+  (args) => {
+    try {
+      const { all, index, token } = args;
+      if (!all && !index && !token) throw new Error('Nothing to do!');
+
+      logHandling();
+      const removedTokenCount = deviceHandler.remove(!!all, token, index);
+
+      logSuccessHeading(
+        `${chalk.red(
+          removedTokenCount
+        )} tokens have been removed from picked list`
+      );
+    } catch (error) {
+      errorHander(error);
+    }
+  }
+);
+
 yargs.command('status', 'Show picked tokens', {}, (_) => {
   try {
     logHandling();

@@ -124,6 +124,29 @@ const pick = (
   return tokenWillBePicked.length;
 };
 
+const remove = (
+  isAll: boolean,
+  removeTokenValues?: string[],
+  removeTokenIndexes?: number[]
+): number => {
+  validateNotExist(removeTokenValues, removeTokenIndexes);
+  const { tokens, pickedTokens } = readDeviceFileData();
+
+  if (isAll) {
+    writeDeviceFileData(tokens, []);
+    return pickedTokens.length;
+  }
+
+  const remainPickedTokens = pickedTokens.filter(({ token }, index) => {
+    const isChoosen =
+      (removeTokenIndexes && removeTokenIndexes.includes(index)) ||
+      (removeTokenValues && removeTokenValues.includes(token));
+    return !isChoosen;
+  });
+  writeDeviceFileData(tokens, remainPickedTokens);
+  return pickedTokens.length - remainPickedTokens.length;
+};
+
 const status = (): { pickedTokens: ExpoToken[] } => {
   if (!existsSync(deviceDataFile)) return { pickedTokens: [] };
 
@@ -132,4 +155,4 @@ const status = (): { pickedTokens: ExpoToken[] } => {
   return { pickedTokens };
 };
 
-export default { fetch, list, pick, status };
+export default { fetch, list, pick, remove, status };

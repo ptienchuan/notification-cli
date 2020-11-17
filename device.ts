@@ -68,6 +68,20 @@ yargs.command(
   }
 );
 
+yargs.command('status', 'Show picked tokens', {}, (_) => {
+  try {
+    logHandling();
+    const { pickedTokens } = deviceHandler.status();
+
+    logSuccessHeading(
+      `There has ${chalk.red(pickedTokens.length)} tokens have been picked`
+    );
+    pickedTokens.length && logTable(pickedTokens);
+  } catch (error) {
+    errorHander(error);
+  }
+});
+
 yargs.command(
   'drop',
   'Drop device token',

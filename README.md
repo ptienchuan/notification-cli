@@ -4,7 +4,7 @@ Command line tool to send notification to mobile app
 
 ## Stack
 
-- [yargs](https://www.npmjs.com/package/yargs)
+- [yargs](https://www.npmjs.com/package/yargs), [chalk](https://www.npmjs.com/package/chalk)
 - [ts-node](https://www.npmjs.com/package/ts-node), [typescript](https://www.npmjs.com/package/typescript)
 
 ## Setup
@@ -47,19 +47,83 @@ Sync the list of device tokens from cloud to local
 
 Show the list of deivce tokens
 
-#### \$ device drop
+#### \$ device pick
 
-Drop device expo token
+Pick device token to prepare for sending notification
 
 ##### options:
 
-    -t
-    --token <token-value>
+```
+-a
+--all
 
-Required option. Provide the value of device token which you want to drop.
+# Pick all device token in the local list
+```
 
-You can drop only one value: `$ device drop --token token1`
+```
+-t
+--token <token-value>
 
-You also can drop multiple values: `$ device drop --token token1 token2 token3`
+# Pick device token by the token value provided
+# Multiple values will be accepted
+```
+
+```
+-i
+--index <token-index>
+
+# Pick device token by the index provided which is displayed at command `list`
+# Multiple values will be accepted
+```
+
+#### \$ device remove
+
+Pick device token to prepare for sending notification
+
+##### options:
+
+```
+-a
+--all
+
+# Empty picked list
+```
+
+```
+-t
+--token <token-value>
+
+# Unpick device token by the value provided
+# Multiple values will be accepted
+```
+
+```
+-i
+--index <token-index>
+
+# Unpick device token by the index provided which is displayed at command `list`
+# Multiple values will be accepted
+```
+
+#### \$ device status
+
+Show the list of picked deivce tokens
+
+#### \$ device drop
+
+Drop device expo token globally
+
+##### options:
+
+```
+-t
+--token <token-value>
+
+# Required option
+# Provide the value of device token which you want to drop
+# Multiple values will be accepted
+```
+
+---
 
 ### Message:

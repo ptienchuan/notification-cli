@@ -1,28 +1,9 @@
-import { existsSync, writeFileSync, readFileSync } from 'fs';
+import { existsSync } from 'fs';
 import { getDeviceTokens } from '../services/notification';
-import { ExpoToken, DeviceFileData } from '../types/device';
+import { ExpoToken } from '../types/device';
 import { deviceDataFile } from '../configs';
 import { createDataDir } from '../utils';
-
-const readDeviceFileData = (): DeviceFileData => {
-  const fileContent = readFileSync(deviceDataFile).toString();
-  const fileData: DeviceFileData = fileContent
-    ? JSON.parse(fileContent)
-    : { tokens: [], pickedTokens: [] };
-
-  return fileData;
-};
-
-const writeDeviceFileData = (
-  tokens: ExpoToken[],
-  pickedTokens: ExpoToken[]
-): void => {
-  const fileData: DeviceFileData = {
-    tokens,
-    pickedTokens,
-  };
-  writeFileSync(deviceDataFile, JSON.stringify(fileData));
-};
+import { readDeviceFileData, writeDeviceFileData } from './index';
 
 const validateNotExist = (
   tokenValues?: string[],

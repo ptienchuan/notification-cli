@@ -126,4 +126,27 @@ Drop device expo token globally
 
 ---
 
-### Message:
+### Notification:
+#### \$ notification send
+
+Send notification to the picked devices
+
+##### options:
+
+```
+-t
+--title <title-value>
+
+# Required option
+# Provide the title of notification
+```
+
+```
+-c
+--content <content-value>
+
+# Required option
+# Provide the content of notification
+```
+
+* * *

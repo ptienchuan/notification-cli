@@ -19,7 +19,7 @@ yargs.command('fetch', 'Sync the list of device tokens', {}, async (_) => {
   }
 });
 
-yargs.command('list', 'Show the list of device tokens', {}, async (_) => {
+yargs.command('list', 'Show the list of device tokens', {}, (_) => {
   try {
     logHandling();
     const { tokens } = deviceHandler.list();
